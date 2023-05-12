@@ -1,6 +1,5 @@
 from chart import Chart
 from typing import List
-from itertools import chain
 
 
 class Telegraph(Chart):
@@ -12,19 +11,17 @@ class Telegraph(Chart):
 
 
 class Encoder(Telegraph):
-    seq = None
-
     def __init__(self, seq: str):
         super().__init__()
         self.seq = seq
+
+    def prepare(self) -> List[str]:
+        return [m.replace("'", "") for m in self.seq.split()]
 
     def encode(self) -> str:
         msg = self.prepare()
         msg = [" ".join(map(self.get_signal_from_letter, m)) for m in msg]
         return " / ".join(msg)
-
-    def prepare(self) -> List[str]:
-        return [m.replace("'", "") for m in self.seq.split()]
 
     def get_signal_from_letter(self, key: str) -> str:
         return self.encoder[key.upper()]
@@ -35,8 +32,15 @@ class Decoder(Telegraph):
         super().__init__()
         self.seq = seq
 
-    def decode(self, msg: List[str]) -> str:
-        return
+    def prepare(self) -> List[str]:
+        msg = [s.strip() for s in self.seq.split("/")]
+        msg = [s.split(" ") for s in msg]
+        return msg
+
+    def decode(self) -> str:
+        msg = self.prepare()
+        msg = ["".join(map(self.get_letter_from_signal, m)) for m in msg]
+        return " ".join(msg).title()
 
     def get_letter_from_signal(self, key: str) -> str:
         return self.decoder[key]
