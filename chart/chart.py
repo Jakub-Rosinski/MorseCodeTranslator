@@ -2,7 +2,7 @@ import json
 
 from typing import Dict
 
-CHART_PATH = "chart.json"
+CHART_PATH = "chart/chart.json"
 
 
 class Chart:
