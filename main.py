@@ -1,4 +1,5 @@
-from telegraph import Encoder, Decoder, Translator
+from translator.translator import Translator
+from coding import Encoder, Decoder
 
 
 def main() -> None:
