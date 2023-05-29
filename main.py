@@ -4,19 +4,20 @@ from translator.translator import Translator
 from coding import Encoder, Decoder
 
 
-def parser():
-    parse = argparse.ArgumentParser(prog="Morse Code Translator",
+def parse():
+    parser = argparse.ArgumentParser(prog="Morse Code Translator",
                                     description='Translate Morse Code')
-    parse.add_argument("-e",
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("-e",
                        "--encode",
                        type=str,
                        help="encode message")
-    parse.add_argument("-d",
+    group.add_argument("-d",
                        "--decode",
                        type=str,
                        help="decode message")
 
-    args = parse.parse_args()
+    args = parser.parse_args()
     return args
 
 
@@ -39,7 +40,7 @@ def decode_message(message: str) -> None:
 
 def main() -> None:
 
-    args = parser()
+    args = parse()
 
     if text := args.encode:
         encode_message(text)
