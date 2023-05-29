@@ -20,20 +20,32 @@ def parser():
     return args
 
 
+def print_original_and_translation(message: str, translation: str) -> None:
+    print(f"Original message: {message}")
+    print(f"Morse code translation: {translation}")
+
+
+def encode_message(message: str) -> None:
+    e = Encoder(message)
+    msg = Translator(e)
+    print_original_and_translation(message=message, translation=msg.translate())
+
+
+def decode_message(message: str) -> None:
+    d = Decoder(message)
+    msg = Translator(d)
+    print_original_and_translation(message=message, translation=msg.translate())
+
+
 def main() -> None:
 
     args = parser()
+
     if text := args.encode:
-        e = Encoder(text)
-        msg = Translator(e)
-        print(f"Original message: {text}")
-        print(f"Morse code translation: {msg.translate()}")
+        encode_message(text)
 
     if text := args.decode:
-        d = Decoder(text)
-        msg = Translator(d)
-        print(f"Original message: {text}")
-        print(f"Morse code translation: {msg.translate()}")
+        decode_message(text)
 
 
 if __name__ == '__main__':
